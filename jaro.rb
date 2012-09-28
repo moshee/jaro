@@ -29,7 +29,7 @@ class String
       end
     end
 
-    return 0 if m.zero?
+    return 0.0 if m.zero?
     
     m1.reduce do |a, b|
       # if either a or b are nil, that means there was no match
