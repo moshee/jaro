@@ -1,5 +1,8 @@
+# encoding: utf-8
+
 class String
-  # Jaro distance
+  # Jaro-Winkler distance
+  # @return [Float] distance, normalized between 0.0 (no match) and 1.0 (perfect match)
   def ^(other)
     return 0 if self.empty? or other.empty?
     s1 = self.codepoints.to_a
@@ -10,7 +13,7 @@ class String
     m, t = 0.0, 0
     max_dist = s2s/2 - 1
 
-    m1 = Array.new(s1s, nil)
+    m1 = Array.new(s1s, -1)
     m2 = Array.new(s2s, false)
 
     # find m
@@ -25,12 +28,14 @@ class String
         end
       end
     end
+
+    return 0 if m.zero?
     
     m1.reduce do |a, b|
       # if either a or b are nil, that means there was no match
       # if a > b, that means the previous value is greater than the current
       # which means it went down
-      if a != nil and b != nil and a > b
+      if a > -1 and b > -1 and a > b
         t += (a-b > 1 ? 1 : 2)
       end
       b
