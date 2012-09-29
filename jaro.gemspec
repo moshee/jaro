@@ -1,6 +1,6 @@
 Gem::Specification.new do |gem|
   gem.name = 'jaro'
-  gem.version = '0.0.2'
+  gem.version = '0.0.3'
   gem.authors = ['moshee']
   gem.email = 'moshee@displaynone.us'
   gem.description = 'Adds String#^ for measuring string similarity'

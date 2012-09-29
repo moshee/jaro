@@ -2,9 +2,12 @@
 
 class String
   # Jaro-Winkler distance
+  # @param [String] other string
   # @return [Float] distance, normalized between 0.0 (no match) and 1.0 (perfect match)
   def ^(other)
-    return 0 if self.empty? or other.empty?
+    return 1.0 if self == other
+    return 0.0 if self.empty? or other.empty?
+
     s1 = self.codepoints.to_a
     s2 = other.codepoints.to_a
     s1, s2 = s2, s1 if s1.size > s2.size
@@ -46,7 +49,10 @@ class String
     # winkler adjustment
     l = 0
     for i in 0..3
-      s1[i] == s2[i] ? l += 1 : break
+      if s1[i] != s2[i]
+        l = i
+        break
+      end
     end
 
     # standard weight (p) for winkler == 0.1
